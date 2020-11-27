@@ -1,8 +1,50 @@
 package model;
 
+import dataStructures.GraphDLabelled;
+import exceptions.NullObjectException;
+
+import java.util.ArrayList;
+
 public class ControllerModel {
 
-    public ControllerModel() {
+    ArrayList<Wholesaler> wholesalers;
+    GraphDLabelled<Wholesaler> graphs;
 
+    public ControllerModel() {
+        wholesalers = new ArrayList<>();
+    }
+
+    /**
+     * this method add a new Wholesaler to an ArrayList
+     *
+     * @param newWS
+     * @throws NullObjectException
+     */
+    public void addNewWholesalers(Wholesaler newWS) throws NullObjectException {
+        if (newWS == null) {
+            throw new NullObjectException();
+        }
+        wholesalers.add(newWS);
+    }
+
+    /**
+     * this method add all the vertices in the Arraylist to the graph
+     */
+    public void addVertices() {
+        graphs = new GraphDLabelled<>(wholesalers.size());
+        for (int i = 0; i < wholesalers.size(); i++) {
+            graphs.labelVertice(i,wholesalers.get(i));
+        }
+    }
+
+    /**
+     * this method create edges between vertices
+     * @param g1
+     * @param g2
+     * @param p
+     * @throws NoSuchMethodException
+     */
+    public void createConnections(Wholesaler g1, Wholesaler g2, int p) throws NoSuchMethodException {
+        graphs.insertEdge(g1, g2, p);
     }
 }
