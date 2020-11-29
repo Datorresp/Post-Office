@@ -13,11 +13,11 @@ import java.util.ResourceBundle;
 
 public class ControllerMain implements Initializable {
 
-    private ControllerModel cm;
+    private final ControllerModel cm;
 
-    private ControllerAddWholesaler controllerAddWholesaler;
-    private ControllerAddConnections controllerAddConnections;
-    private ControllerRoute controllerRoute;
+    private final ControllerAddWholesaler controllerAddWholesaler;
+    private final ControllerAddConnections controllerAddConnections;
+    private final ControllerRoute controllerRoute;
 
     @FXML
     private BorderPane bp;
@@ -65,6 +65,17 @@ public class ControllerMain implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @FXML
+    void createRoute() {
+        try{
+            FXMLLoader fl = new FXMLLoader(getClass().getResource("../windows/fxCreateRoute.fxml"));
+            fl.setController(controllerRoute);
+            Pane p = fl.load();
+            bp.setCenter(p);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
