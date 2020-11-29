@@ -10,9 +10,7 @@ public class Wholesaler {
     }
 
     @Override
-    public String  toString() {
-        return "Wholesaler" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'';
+    public String toString() {
+        return "name '" + name + '\'' +", id '" + id + '\'';
     }
 }

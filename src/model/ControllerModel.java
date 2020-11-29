@@ -55,4 +55,8 @@ public class ControllerModel {
     public ArrayList<Wholesaler> getWholesalers() {
         return wholesalers;
     }
+
+    public GraphDLabelled<Wholesaler> getGraphs() {
+        return graphs;
+    }
 }
