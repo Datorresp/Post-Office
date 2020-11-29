@@ -34,7 +34,12 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button layoutX="230.0" layoutY="313.0" mnemonicParsing="false" onAction="#addWholesaler" prefHeight="30.0" prefWidth="141.0" text="ADD">
+      <Button layoutX="230.0" layoutY="271.0" mnemonicParsing="false" onAction="#addWholesaler" prefHeight="30.0" prefWidth="141.0" text="ADD">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="194.0" layoutY="316.0" mnemonicParsing="false" onAction="#createOfVertices" prefHeight="30.0" prefWidth="212.0" text="CREATION OF VERTICES">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

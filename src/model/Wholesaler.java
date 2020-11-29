@@ -8,4 +8,11 @@ public class Wholesaler {
         this.name = name;
         this.id = id;
     }
+
+    @Override
+    public String  toString() {
+        return "Wholesaler" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'';
+    }
 }

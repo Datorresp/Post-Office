@@ -1,15 +1,20 @@
 package controllers;
 
+import exceptions.EmptyException;
 import exceptions.NullObjectException;
 import exceptions.SomethingIsMissingException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import model.ControllerModel;
 import model.Wholesaler;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ControllerAddWholesaler implements Initializable {
@@ -48,6 +53,26 @@ public class ControllerAddWholesaler implements Initializable {
         }
     }
 
+    @FXML
+    void createOfVertices() {
+        try {
+            ControllerModel c = cm.getCm();
+            BorderPane bp = cm.getBp();
+            c.addVertices();
+            alert3();
+            bp.setCenter(new Pane());
+        } catch (EmptyException e) {
+            alert2(e);
+        }
+    }
+
+    private void alert3() {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle("Creation of vertices");
+        a.setContentText("the creation of the vertices has been successful");
+        a.showAndWait();
+    }
+
     private void clean() {
         tfi.setText("");
         tfName.setText("");
@@ -68,6 +93,7 @@ public class ControllerAddWholesaler implements Initializable {
         a.setContentText(e.getMessage());
         a.showAndWait();
     }
+
 
 
 }

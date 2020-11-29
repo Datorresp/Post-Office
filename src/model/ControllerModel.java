@@ -1,6 +1,7 @@
 package model;
 
 import dataStructures.GraphDLabelled;
+import exceptions.EmptyException;
 import exceptions.NullObjectException;
 
 import java.util.ArrayList;
@@ -30,7 +31,10 @@ public class ControllerModel {
     /**
      * this method add all the vertices in the Arraylist to the graph
      */
-    public void addVertices() {
+    public void addVertices() throws EmptyException {
+        if (wholesalers.size() == 0){
+            throw new EmptyException();
+        }
         graphs = new GraphDLabelled<>(wholesalers.size());
         for (int i = 0; i < wholesalers.size(); i++) {
             graphs.labelVertice(i,wholesalers.get(i));
@@ -46,5 +50,9 @@ public class ControllerModel {
      */
     public void createConnections(Wholesaler g1, Wholesaler g2, int p) throws NoSuchMethodException {
         graphs.insertEdge(g1, g2, p);
+    }
+
+    public ArrayList<Wholesaler> getWholesalers() {
+        return wholesalers;
     }
 }
