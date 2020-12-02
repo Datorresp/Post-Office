@@ -130,5 +130,36 @@ public class Methods {
 		time++;
 		u.setF(time);
 	}
+	
+	//BFS
+	public void BFS(E origin) {
+		Queue<VertexList<E>> q = new LinkedList<VertexList<E>>();
+		for(int i = 0; i < vertex.size(); i++) {
+			if(vertex.get(i).getObject().equals(origin)) {
+				vertex.get(i).setColor("GRAY");
+				vertex.get(i).setDistance(0);
+				vertex.get(i).setPredecessor(null);
+				q.offer(vertex.get(i));
+			} else {
+				vertex.get(i).setColor("WHITE");
+				vertex.get(i).setDistance(Integer.MAX_VALUE);
+				vertex.get(i).setPredecessor(null);
+			}
+		}
+		while(!q.isEmpty()) {
+			VertexList<E> u = q.poll();
+			List<Adjacent<E>> theAdjacents = u.getAdjacents();
+			for(int i = 0; i < theAdjacents.size(); i++) {
+				if(theAdjacents.get(i).getVertex().getColor().equals("WHITE")) {
+					theAdjacents.get(i).getVertex().setColor("GRAY");
+					theAdjacents.get(i).getVertex().setDistance(u.getDistance()+1);
+					theAdjacents.get(i).getVertex().setPredecessor(u);
+					q.offer(theAdjacents.get(i).getVertex());
+					
+				}
+			}
+			u.setColor("BLACK");
+		}
+	}
 
 }
