@@ -29,5 +29,33 @@ public class Methods {
 		return min;
 		
 	}
+	
+	//Dijkstra
+	@Override
+	public void Dijkstra(E origin) {
+		PriorityQueue<VertexList<E>> pq = new PriorityQueue<VertexList<E>>();
+		for(int i = 0; i < vertex.size(); i++) {
+			if(vertex.get(i).getObject().equals(origin)) {
+				vertex.get(i).setDistance(0);
+			}else {
+				vertex.get(i).setDistance(Integer.MAX_VALUE);
+			}
+			vertex.get(i).setPredecessor(null);
+			pq.add(vertex.get(i));
+		}
+		while(!pq.isEmpty()) {
+			VertexList<E> u = pq.poll();
+			List<Adjacent<E>> adjacents = u.getAdjacents();
+			for(int i = 0; i < adjacents.size(); i++) {
+				int alt = u.getDistance() + adjacents.get(i).getWeight();
+				if(alt < adjacents.get(i).getVertex().getDistance()) {
+					adjacents.get(i).getVertex().setDistance(alt);
+					adjacents.get(i).getVertex().setPredecessor(u);
+					pq.remove(adjacents.get(i).getVertex());
+					pq.add(adjacents.get(i).getVertex());
+				}
+			}
+		}
+	}
 
 }
