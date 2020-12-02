@@ -100,5 +100,35 @@ public class Methods {
 	}
 		return cost;
 	}
+	
+	//DFS
+	public void DFS() {
+		for(int i = 0; i < vertex.size(); i++) {
+			vertex.get(i).setColor("WHITE");
+			vertex.get(i).setPredecessor(null);
+		}
+		time = 0;
+		for(int i = 0; i < vertex.size(); i++) {
+			if(vertex.get(i).getColor().equals("WHITE")) {
+				DFSVisit(vertex.get(i));
+			}
+		}
+	}
+
+	public void DFSVisit(VertexList<E> u) {
+		time++;
+		u.setDistance(time);
+		u.setColor("GRAY");
+		List<Adjacent<E>> adjacents = u.getAdjacents();
+		for(int i = 0; i < adjacents.size(); i++) {
+			if(adjacents.get(i).getVertex().getColor().equals("WHITE")) {
+				adjacents.get(i).getVertex().setPredecessor(u);
+				DFSVisit(adjacents.get(i).getVertex());
+			}
+		}
+		u.setColor("BLACK");
+		time++;
+		u.setF(time);
+	}
 
 }
