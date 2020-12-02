@@ -57,5 +57,48 @@ public class Methods {
 			}
 		}
 	}
+	//prim 
+	public int prim(E node) {
+		int cost = 0;
+		VertexList<E> firstNode = null;
+		boolean finded = false;
+		for(int i = 0; i < vertex.size() && !finded; i++) {
+			if(vertex.get(i).getObject().equals(node)) {
+				firstNode = vertex.get(i);
+				finded = true;
+			}
+		}
+		List<VertexList<E>> addVertexVisited = new ArrayList<>();
+		List<Adjacent<E>> noVisited = new ArrayList<>();
+		addVertexVisited.add(firstNode);
+		System.out.println("aqui");
+		for(int i = 0; i < firstNode.getAdjacents().size();i++) {
+			noVisited.add(firstNode.getAdjacents().get(i));
+		}
+		int m = 1;
+		boolean t = false;
+		while(!noVisited.isEmpty() && !t) {			
+				Adjacent<E>  temp = compareWeight(noVisited);
+				if(temp != null) {
+				if(!existInList(temp,addVertexVisited)) {
+					addVertexVisited.add(temp.getVertex());
+					cost += temp.getWeight();
+					m++;
+					Adjacent<E> temp1 = temp;
+					noVisited.remove(temp1);
+					for(int i = 0; i < temp.getVertex().getAdjacents().size();i++) {
+						noVisited.add(temp.getVertex().getAdjacents().get(i));
+					}
+
+					
+				}else {
+					noVisited.remove(temp);
+				}
+		}else {
+			t = true;
+		}
+	}
+		return cost;
+	}
 
 }
