@@ -177,6 +177,62 @@ public class ControllerModel {
         return nm;
     }
 
+    public int[] prim() throws NoSuchMethodException {
+
+        double[][] graph = createDistanceMatrix1();
+
+        int parent[] = new int[graphs.numVertices()];
+
+        int key[] = new int[graphs.numVertices()];
+
+        Boolean mstSet[] = new Boolean[graphs.numVertices()];
+
+        for (int i = 0; i < graphs.numVertices(); i++) {
+            key[i] = Integer.MAX_VALUE;
+            mstSet[i] = false;
+        }
+
+        key[0] = 0;
+        parent[0] = -1;
+
+        for (int count = 0; count < graphs.numVertices() - 1; count++) {
+
+            int u = minKey(key, mstSet);
+
+            mstSet[u] = true;
+            for (int v = 0; v < graphs.numVertices(); v++)
+                if (graph[u][v] != 0 && mstSet[v] == false && graph[u][v] < key[v]) {
+                    parent[v] = u;
+                    key[v] = (int) graph[u][v];
+                }
+        }
+        return parent;
+    }
+
+    private double[][] createDistanceMatrix1() throws NoSuchMethodException {
+        double[][] nm = new double[graphs.numVertices()][graphs.numVertices()];
+        for (int i = 0; i < wholesalers.size(); i++) {
+            ListPI<Adjacent> lp = graphs.adjacentOf(i);
+            for (lp.begin();!lp.isEnd();lp.next()){
+                nm[i][lp.get().destination] = lp.get().weight;
+            }
+        }
+        return nm;
+    }
+
+    private int minKey(int key[], Boolean mstSet[]) {
+
+        int min = Integer.MAX_VALUE, min_index = -1;
+
+        for (int v = 0; v < graphs.numVertices(); v++)
+            if (mstSet[v] == false && key[v] < min) {
+                min = key[v];
+                min_index = v;
+            }
+
+        return min_index;
+    }
+
     public ArrayList<Wholesaler> getWholesalers() {
         return wholesalers;
     }
