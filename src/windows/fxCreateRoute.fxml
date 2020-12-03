@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.4" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label alignment="CENTER" layoutX="118.0" layoutY="31.0" prefHeight="17.0" prefWidth="364.0" text="CONNECTIONS">
+            <font>
+                <Font name="System Bold" size="36.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" layoutX="118.0" layoutY="97.0" prefHeight="17.0" prefWidth="364.0" text="From">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="cb1" layoutX="115.0" layoutY="132.0" prefHeight="25.0" prefWidth="370.0" />
+        <Button layoutX="237.0" layoutY="302.0" mnemonicParsing="false" onAction="#connections" prefHeight="30.0" prefWidth="127.0" text="DO IT">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+    </children>
+</Pane>

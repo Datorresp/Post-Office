@@ -1,6 +1,9 @@
 package model;
 
+import dataStructures.Adjacent;
 import dataStructures.GraphDLabelled;
+import dataStructures.ListPI;
+import dataStructures.ObjInMatrix;
 import exceptions.EmptyException;
 import exceptions.NullObjectException;
 
@@ -12,7 +15,26 @@ public class ControllerModel {
     GraphDLabelled<Wholesaler> graphs;
 
     public ControllerModel() {
-        wholesalers = new ArrayList<>();
+        try {
+            wholesalers = new ArrayList<>();
+            Wholesaler d1 = new Wholesaler("D1","1236");
+            wholesalers.add(d1);
+            Wholesaler app = new Wholesaler("app","3614");
+            wholesalers.add(app);
+            Wholesaler can = new Wholesaler("can","2378");
+            wholesalers.add(can);
+            Wholesaler gray = new Wholesaler("gray","1645");
+            wholesalers.add(gray);
+            addVertices();
+            createConnections(d1,app,5);
+            createConnections(d1,can,10);
+            createConnections(d1,gray,4);
+            createConnections(app,can,3);
+            createConnections(gray,can,2);
+            createConnections(can,gray,5);
+        } catch (EmptyException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -50,6 +72,76 @@ public class ControllerModel {
      */
     public void createConnections(Wholesaler g1, Wholesaler g2, int p) throws NoSuchMethodException {
         graphs.insertEdge(g1, g2, p);
+    }
+
+    /**
+     *
+     *
+     * @param initial
+     * @return
+     * @throws NoSuchMethodException
+     */
+    public ObjInMatrix[][] dijkstra(Wholesaler initial) throws NoSuchMethodException {
+        ObjInMatrix[][] oim = new ObjInMatrix[graphs.numEdges()][graphs.numVertices()];
+        boolean[] bVertex = new boolean[graphs.numVertices()];
+        oim[0][graphs.getCode(initial)] = new ObjInMatrix(0,graphs.getCode(initial));
+        ListPI<Adjacent> adj0 = new ListPI<>();
+        adj0.insert(new Adjacent(graphs.getCode(initial), 0));
+        ListPI<Adjacent> adj1 = graphs.adjacentOf(initial);
+        ListPI<Adjacent> adj2 = new ListPI<>();
+        int i = 1;
+        boolean e = false;
+        adj0.begin();
+        while (!e && i < graphs.numEdges()) {
+            if (adj1 != null) {
+                for (adj1.begin(); !adj1.isEnd(); adj1.next()) {
+                    adj2.insert(adj1.get());
+                    oim = setItems(oim, i, graphs.getLabel(adj0.get().destination), adj1.get());
+                }
+            }
+            bVertex[adj0.get().destination] = true;
+            adj0.next();
+            if (adj0.isEnd()){
+                i++;
+                adj0 = adj2;
+                adj2 = new ListPI<>();
+                adj0.begin();
+            }
+            if (adj0.isEmpty()) {
+                e = true;
+            }else {
+                if (bVertex[adj0.get().destination] == true){
+                    adj1 = null;
+                }else {
+                    adj1 = graphs.adjacentOf(adj0.get().destination);
+                }
+            }
+        }
+        return oim;
+    }
+
+
+    /**
+     *
+     * @param oim
+     * @param code
+     * @param previous
+     * @param adjacent
+     * @return
+     * @throws NoSuchMethodException
+     */
+    private ObjInMatrix[][] setItems(ObjInMatrix[][] oim, int code, Wholesaler previous, Adjacent adjacent) throws NoSuchMethodException {
+        int codeM = code-1;
+        double sumW = (oim[codeM][graphs.getCode(previous)].getSumWeight()) + (graphs.weightEdge(previous,graphs.getLabel(adjacent.destination)));
+        if (oim[code][adjacent.destination] == null) {
+            oim[code][adjacent.destination] = new ObjInMatrix(sumW, graphs.getCode(previous));
+        }else {
+            if ((oim[code][adjacent.destination].getSumWeight()) > sumW){
+                oim[code][adjacent.destination] = new ObjInMatrix(sumW, graphs.getCode(previous));
+            }
+        }
+
+        return oim;
     }
 
     public ArrayList<Wholesaler> getWholesalers() {
