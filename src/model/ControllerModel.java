@@ -144,6 +144,39 @@ public class ControllerModel {
         return oim;
     }
 
+    public double[][] floydWarshall() throws NoSuchMethodException {
+        double[][] distanceMatrix = createDistanceMatrix();
+
+        for (int k = 0; k < distanceMatrix.length; k++) {
+            for (int i = 0; i < distanceMatrix.length; i++) {
+                for (int j = 0; j < distanceMatrix.length; j++) {
+                    if(distanceMatrix[i][k] + distanceMatrix[k][j] < distanceMatrix[i][j]) {
+                        distanceMatrix[i][j] = distanceMatrix[i][k] + distanceMatrix[k][j];
+                    }
+                }
+            }
+        }
+        return distanceMatrix;
+    }
+
+    private double[][] createDistanceMatrix() throws NoSuchMethodException {
+        double[][] nm = new double[graphs.numVertices()][graphs.numVertices()];
+        for (int i = 0; i < wholesalers.size(); i++) {
+            ListPI<Adjacent> lp = graphs.adjacentOf(i);
+            for (lp.begin();!lp.isEnd();lp.next()){
+                nm[i][lp.get().destination] = lp.get().weight;
+            }
+        }
+        for (int x=0; x < nm.length; x++) {
+            for (int y=0; y < nm[x].length; y++) {
+                if (nm[x][y] == 0){
+                    nm[x][y] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        return nm;
+    }
+
     public ArrayList<Wholesaler> getWholesalers() {
         return wholesalers;
     }

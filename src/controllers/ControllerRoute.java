@@ -48,4 +48,22 @@ public class ControllerRoute implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void connections1() {
+        try {
+            ControllerModel c = cm.getCm();
+            double[][] dj = c.floydWarshall();
+            for (int x=0; x < dj.length; x++) {
+                System.out.print("|");
+                for (int y=0; y < dj[x].length; y++) {
+                    System.out.print (dj[x][y]);
+                    if (y!=dj[x].length-1) System.out.print("\t");
+                }
+                System.out.println("|");
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
 }
