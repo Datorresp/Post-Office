@@ -16,6 +16,10 @@ public class ControllerRoute implements Initializable {
 
     @FXML
     private ComboBox<Wholesaler> cb1;
+    @FXML
+    private ComboBox<String> cb2;
+
+    private ObservableList<String> ol2 = FXCollections.observableArrayList("Dijkstra", "Floyd Warshall", "Prim", "Kruskal", "DFS", "BFS");
 
     private ControllerMain cm;
 
@@ -28,7 +32,45 @@ public class ControllerRoute implements Initializable {
         ControllerModel c = cm.getCm();
         ObservableList<Wholesaler> ol1 = FXCollections.observableArrayList(c.getWholesalers());
         cb1.setItems(ol1);
+        cb2.setItems(ol2);
     }
+
+    @FXML
+    void change() {
+        String op = cb2.getValue();
+        if (op.equals("Dijkstra")){
+            cb1.setDisable(false);
+        }else {
+            cb1.setDisable(true);
+        }
+    }
+
+    @FXML
+    void doit() {
+        String op = cb2.getValue();
+        switch (op) {
+            case "Dijkstra":
+                connections();
+                break;
+            case "Floyd Warshall":
+                connections1();
+                break;
+            case "Prim":
+                connections2();
+                break;
+            case "Kruskal":
+                connections3();
+                break;
+            case "DFS":
+                connections4();
+                break;
+            case "BFS":
+                connections5();
+                break;
+        }
+    }
+
+
 
     @FXML
     void connections() {
@@ -76,6 +118,35 @@ public class ControllerRoute implements Initializable {
                 System.out.println(dj[i] + " - " + i);
             }
         } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void connections3() {
+        try {
+            ControllerModel c = cm.getCm();
+            System.out.println(c.kruskalMST());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    void connections4() {
+        try {
+            ControllerModel c = cm.getCm();
+            c.dfs();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void connections5() {
+        try{
+            ControllerModel c = cm.getCm();
+            System.out.println(c.bfs(0));
+        }catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
